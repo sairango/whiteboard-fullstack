@@ -1,19 +1,7 @@
-import BoardProvider from "./store/BoardProvider";
-import Board from "./components/Board";
-import Toolbar from "./components/Toolbar";
-import ToolboxProvider from "./store/ToolboxProvider";
-import Toolbox from "./components/Toolbox";
+import CanvasPage from "./pages/CanvasPage"
 
 function App() {
-  return (
-    <BoardProvider>
-      <ToolboxProvider>
-        <Board />
-        <Toolbar />
-        <Toolbox/>
-      </ToolboxProvider>
-    </BoardProvider>
-  );
+  return <CanvasPage />;
 }
 
 export default App;
