@@ -10,11 +10,11 @@
 
 .card {
   @apply bg-white
-    px-8
-    py-10
+    px-10
+    py-12
     rounded-lg
     shadow-2xl
-    w-1/5;
+    w-1/4;
 }
 
 .form {
@@ -52,7 +52,7 @@
     font-permanent;
 }
 
-.loginbutton {
+.registerbutton {
   @apply w-full
     bg-gray-900
     text-white
@@ -65,24 +65,11 @@
     focus:ring-2
     focus:ring-gray-900;
 }
-.loginbutton:hover{
+.registerbutton:hover{
   @apply
    bg-gray-800
    translate-y-[-1px]
 
 }
 
-.registerline{
-  @apply 
-   font-permanent
-   text-lg
-   text-center
-   tracking-wider
-   leading-relaxed
-   cursor-pointer
-}
 
-.registerline:hover{
-  @apply
-   underline
-}

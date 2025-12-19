@@ -1,15 +1,7 @@
-import classes from "./LoginPage.module.css";
-import bgimg from "./../assets/bg.png";
-import { useNavigate } from "react-router";
+import classes from "./RegisterPage.module.css";
+import bgimg from "../assets/bg.png";
 
-function Login() {
-  const navigate = useNavigate();
-
-  const handleRegisterClick = () => {
-    navigate("/register");
-  };
-
-  
+function Register() {
   return (
     <div className={classes.bg} style={{ backgroundImage: `url(${bgimg})` }}>
       <div className={classes.card}>
@@ -20,16 +12,16 @@ function Login() {
           <label className={classes.labels}>Password:</label>
           <input className={classes.inputbox} type="password" id="password" />
 
-          <button type="submit" className={classes.loginbutton}>
-            Login
+          <label className={classes.labels}>Confirm Password:</label>
+          <input className={classes.inputbox} type="password" id="password" />
+
+          <button type="submit" className={classes.registerbutton}>
+            Register
           </button>
         </form>
-        <div className={classes.registerline} onClick={handleRegisterClick}>
-          Register Here
-        </div>
       </div>
     </div>
   );
 }
 
-export default Login;
+export default Register;
