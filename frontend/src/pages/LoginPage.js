@@ -1,6 +1,6 @@
 import classes from "./LoginPage.module.css";
 import bgimg from "./../assets/bg.png";
-import { useNavigate } from "react-router";
+import { useNavigate } from "react-router-dom";
 
 function Login() {
   const navigate = useNavigate();
@@ -9,7 +9,6 @@ function Login() {
     navigate("/register");
   };
 
-  
   return (
     <div className={classes.bg} style={{ backgroundImage: `url(${bgimg})` }}>
       <div className={classes.card}>

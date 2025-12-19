@@ -4,8 +4,10 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
+        // sans:["Inter" , "system-ui" , "sans-serif"],
         lacquer: ["Lacquer", "cursive"],
         permanent: ['"Permanent Marker"', "cursive"],
+        cookie:["Cookie" , "cursive"],
       },
     },
   },
