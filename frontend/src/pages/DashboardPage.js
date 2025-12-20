@@ -27,6 +27,12 @@ function Dashboard() {
             </button>
           </div>
         ))}
+        <div className={classes.card}>
+          <h2 className={classes.cardTitle}>CREATE A NEW CANVAS</h2>
+          <button className={classes.openButton} onClick={handleCanvasOpen}>
+            CREATE
+          </button>
+        </div>
       </div>
     </div>
   );

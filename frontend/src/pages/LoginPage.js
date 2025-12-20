@@ -1,9 +1,18 @@
 import classes from "./LoginPage.module.css";
 import bgimg from "./../assets/bg.png";
 import { useNavigate } from "react-router-dom";
+import { useContext } from "react";
+import authContext from "../auth/auth-context";
 
 function Login() {
   const navigate = useNavigate();
+  const { login } = useContext(authContext);
+  const handleLogin = (event) => {
+    
+    event.preventDefault();
+    login();
+    navigate("/dashboard");
+  };
 
   const handleRegisterClick = () => {
     navigate("/register");
@@ -19,7 +28,10 @@ function Login() {
           <label className={classes.labels}>Password:</label>
           <input className={classes.inputbox} type="password" id="password" />
 
-          <button type="submit" className={classes.loginbutton}>
+          <button
+            type="submit"
+            className={classes.loginbutton}
+            onClick={handleLogin}>
             Login
           </button>
         </form>
