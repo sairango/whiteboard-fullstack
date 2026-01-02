@@ -1,24 +1,36 @@
 import classes from "./RegisterPage.module.css";
-import bgimg from "../assets/bg.png";
+
 
 function Register() {
   return (
-    <div className={classes.bg} style={{ backgroundImage: `url(${bgimg})` }}>
-      <div className={classes.card}>
-        <form className={classes.form}>
-          <label className={classes.labels}>User Name:</label>
-          <input className={classes.inputbox} type="text" id="username" />
-
-          <label className={classes.labels}>Password:</label>
-          <input className={classes.inputbox} type="password" id="password" />
-
-          <label className={classes.labels}>Confirm Password:</label>
-          <input className={classes.inputbox} type="password" id="password" />
-
-          <button type="submit" className={classes.registerbutton}>
-            Register
-          </button>
-        </form>
+    <div className={`${classes.container}`}>
+      <div className={classes.leftside}>
+        <div className={classes.leftcontent}>
+          <h1 className={classes.heading}>Collaborative WB</h1>
+          <p className={classes.headingdesc}>
+            Real-time collaborative whiteboard.
+            <br />
+            Draw. Think. Collaborate.
+            <br />
+            Design,discuss, and build together
+            <br />
+          </p>
+        </div>
+      </div>
+      <div className={classes.rightside}>
+        <div className={classes.card}>
+          <form className={classes.form}>
+            <label className={classes.formheading}>Username</label>
+            <input className={classes.inputfield}></input>
+            <label className={classes.formheading}>Password</label>
+            <input className={classes.inputfield} type="password"></input>
+            <label className={classes.formheading}>Confirm Password</label>
+            <input className={classes.inputfield} type="password"></input>
+            <button className={classes.button} type="Submit">
+              Register
+            </button>
+          </form>
+        </div>
       </div>
     </div>
   );

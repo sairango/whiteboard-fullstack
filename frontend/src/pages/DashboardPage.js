@@ -1,5 +1,5 @@
 import classes from "./DashboardPage.module.css";
-import bgimg from "../assets/bg.png";
+// import bgimg from "../assets/bg.png";
 import { useNavigate } from "react-router";
 
 function Dashboard() {
@@ -16,22 +16,22 @@ function Dashboard() {
   };
 
   return (
-    <div className={classes.bg} style={{ backgroundImage: `url(${bgimg})` }}>
-      <h1 className={classes.heading}>MY CANVASES</h1>
+    <div className={classes.container}>
+      <h1 className={classes.heading}>My Canvases</h1>
+
       <div className={classes.dashboardcontainer}>
         {canvases.map((canvas) => (
           <div key={canvas.id} className={classes.card}>
             <h2 className={classes.cardTitle}>{canvas.title}</h2>
-            <button className={classes.openButton} onClick={handleCanvasOpen}>
+            <button className={classes.button} onClick={handleCanvasOpen}>
               Open
             </button>
           </div>
         ))}
+
         <div className={classes.card}>
-          <h2 className={classes.cardTitle}>CREATE A NEW CANVAS</h2>
-          <button className={classes.openButton} onClick={handleCanvasOpen}>
-            CREATE
-          </button>
+          <h2 className={classes.cardTitle}>Create a New Canvas</h2>
+          <button className={classes.button}>Create</button>
         </div>
       </div>
     </div>
