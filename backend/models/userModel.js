@@ -2,9 +2,10 @@ import mongoose from "mongoose";
 import bcrypt from "bcrypt";
 
 const userSchema = new mongoose.Schema({
-  name: {
+  username: {
     type: String,
     required: true,
+    unique: true,
     trim: true,
   },
   email: {
@@ -23,20 +24,18 @@ userSchema.pre("save", async function (next) {
   if (!this.isModified("password")) {
     return next();
   }
-  this.password = await bcrypt.hash(this.password, 12);
-  next();
+
+  try {
+    const salt = await bcrypt.genSalt(10);
+    this.password = await bcrypt.hash(this.password, salt);
+    next();
+  } catch (error) {
+    next(error);
+  }
 });
 
-userSchema.statics.registerUser = async function (userData) {
-  userData.email = userData.email.toLowerCase();
-
-  const exists = await this.findOne({ email: userData.email });
-  if (exists) throw new Error("User already exists");
-
-  const user = new this(usrData);
-  await user.save();
-
-  return user;
+userSchema.methods.comparePassword = async function (enteredpassword) {
+  return bcrypt.compare(enteredpassword, this.password);
 };
 
 const User = mongoose.model("User", userSchema);
