@@ -1,4 +1,9 @@
 import User from "../models/userModel.js";
+import jwt from "jsonwebtoken";
+import dotenv from "dotenv";
+dotenv.config();
+
+const secretKey = process.env.SECRET_KEY;
 
 export const registerUser = async (req, res) => {
   try {
@@ -52,14 +57,31 @@ export const loginUser = async (req, res) => {
       return res.status(401).json({ message: "Invalid credentials" });
     }
 
+    const token = jwt.sign({ userId: user._id }, secretKey, {
+      expiresIn: "7d",
+    });
+
     return res.status(200).json({
       message: "Login Successful",
-      user: { username: user.username, email: user.email },
+      token,
     });
   } catch (error) {
     res.status(500).json({
       error: "Error occured while logging in",
       details: error.message,
     });
+  }
+};
+
+export const getUser = async (req, res) => {
+  try {
+    const user = await User.findById(req.userId).select("-password");
+    if (!user) return res.status(404).json({ error: "User not found" });
+
+    res.json(user); 
+  } catch (error) {
+    res
+      .status(500)
+      .json({ error: "Failed to get user", details: error.message });
   }
 };
