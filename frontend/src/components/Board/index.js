@@ -19,6 +19,8 @@ function Board() {
     redo,
   } = useContext(boardContext);
 
+  // console.log(elements);
+
   const { toolboxState } = useContext(toolboxContext);
 
   useEffect(() => {
@@ -43,6 +45,8 @@ function Board() {
     canvas.height = window.innerHeight;
     const context = canvas.getContext("2d");
     context.save();
+    // console.log(elements);
+    // context.clearRect(0, 0, canvas.width, canvas.height);
 
     const roughCanvas = rough.canvas(canvas);
 
@@ -88,6 +92,7 @@ function Board() {
   }, [toolActionType]);
 
   const handleMouseDown = (event) => {
+    
     boardMouseDownHandler(event, toolboxState);
   };
 
@@ -99,7 +104,7 @@ function Board() {
   };
 
   return (
-    <div>
+    <div className={classes.container}>
       {toolActionType === TOOL_ACTION_TYPES.WRITING && (
         <textarea
           ref={textAreaRef}

@@ -8,6 +8,7 @@ const canvasSchema = new mongoose.Schema(
       ref: "User",
       required: true,
     },
+    title: { type: String, default: "Untitled Canvas" },
     shared: [{ type: mongoose.Schema.ObjectId, ref: "User" }],
     elements: [{ type: mongoose.Schema.Types.Mixed }],
     createdAt: { type: Date, default: Date.now },

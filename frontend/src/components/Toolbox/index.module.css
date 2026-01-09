@@ -9,7 +9,7 @@
 }
 
 .toolBoxLabel {
-  @apply block mb-1;
+  @apply block mb-1 font-dyna;
 }
 
 .colorsContainer {

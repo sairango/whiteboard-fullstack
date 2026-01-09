@@ -10,8 +10,17 @@ import {
 
 import getStroke from "perfect-freehand";
 
+
 const boardReducer = (state, action) => {
   switch (action.type) {
+    case BOARD_ACTIONS.LOAD_CANVAS: {
+      return {
+        ...state, 
+        elements: action.payload.elements,
+        history: [action.payload.elements],
+        index:0,
+      }
+    }
     case BOARD_ACTIONS.CHANGE_TOOL: {
       return {
         ...state,
@@ -27,7 +36,7 @@ const boardReducer = (state, action) => {
     }
 
     case BOARD_ACTIONS.DRAW_DOWN: {
-      console.log(state.activeToolItem);
+      
 
       const { clientX, clientY, stroke, fill, size } = action.payload;
       const newElement = createElement(
@@ -51,6 +60,9 @@ const boardReducer = (state, action) => {
     }
 
     case BOARD_ACTIONS.DRAW_MOVE: {
+      if (state.elements.length === 0) {
+        return state;
+      }
       const { clientX, clientY } = action.payload;
       const newElements = [...state.elements];
       const index = state.elements.length - 1;
@@ -272,6 +284,13 @@ const BoardProvider = ({ children }) => {
     });
   }, []);
 
+  const loadCanvasHandler = useCallback((elements) => {
+    dispatchBoardAction({
+      type: BOARD_ACTIONS.LOAD_CANVAS,
+      payload: { elements },
+    });
+  },[]);
+
   const boardContextValue = {
     activeToolItem: boardState.activeToolItem,
     elements: boardState.elements,
@@ -283,6 +302,7 @@ const BoardProvider = ({ children }) => {
     textAreaBlurHandler,
     undo: boardUndoHandler,
     redo: boardRedoHandler,
+    loadCanvas:loadCanvasHandler,
   };
 
   return (

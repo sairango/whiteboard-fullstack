@@ -15,3 +15,13 @@
   line-height: inherit;
   font-family: "Caveat";
 }
+
+.container{
+  @apply
+  flex
+  bg-background_color
+  min-h-screen
+  bg-grid-small
+  
+  
+}

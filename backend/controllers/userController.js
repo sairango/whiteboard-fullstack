@@ -42,6 +42,7 @@ export const registerUser = async (req, res) => {
 export const loginUser = async (req, res) => {
   try {
     const { email, password } = req.body;
+    console.log("req received")
 
     if (!email || !password) {
       return res.status(400).json({ message: "All fields are required" });
@@ -63,12 +64,12 @@ export const loginUser = async (req, res) => {
 
     return res.status(200).json({
       message: "Login Successful",
-      token,
+      token:token,
     });
   } catch (error) {
     res.status(500).json({
       error: "Error occured while logging in",
-      details: error.message,
+      message: error.message,
     });
   }
 };

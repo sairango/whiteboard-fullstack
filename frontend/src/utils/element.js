@@ -13,6 +13,7 @@ export const createElement = (
   y2,
   { type, stroke, fill, size }
 ) => {
+  console.log("element create");
   const newElement = {
     id,
     x1,

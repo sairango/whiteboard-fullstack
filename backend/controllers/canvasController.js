@@ -1,6 +1,6 @@
 import { ReturnDocument } from "mongodb";
-import Canvas from "../models/canvasModel";
-import User from "../models/userModel";
+import Canvas from "../models/canvasModel.js";
+import User from "../models/userModel.js";
 
 export const createCanvas = async (req, res) => {
   try {
@@ -50,7 +50,7 @@ export const updateCanvas = async (req, res) => {
 export const loadCanvas = async (req, res) => {
   try {
     const userId = req.userId;
-    const { canvasId } = req.body;
+    const { canvasId } = req.params;
     const canvas = await Canvas.findById(canvasId);
     if (!canvas) {
       return res.status(404).json({ message: "Canvas not found" });

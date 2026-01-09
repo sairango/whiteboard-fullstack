@@ -110,3 +110,17 @@
   text-2xl
   text-center
 }
+
+.error {
+  @apply
+  text-sm
+  text-red-600
+  font-dyna
+  text-center
+  bg-red-50
+  border
+  border-red-300
+  rounded-md
+  px-3
+  py-2;
+}
