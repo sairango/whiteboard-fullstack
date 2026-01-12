@@ -12,7 +12,7 @@ module.exports = {
           "linear-gradient(to right, rgba(0,0,0,0.08) 1px, transparent 1px), linear-gradient(to bottom, rgba(0,0,0,0.08) 1px, transparent 1px)",
       },
       backgroundSize: {
-        "grid-small": "20px 20px",
+        "grid-small": "12px 12px",
       },
       fontFamily: {
         lacquer: ["Lacquer", "cursive"],

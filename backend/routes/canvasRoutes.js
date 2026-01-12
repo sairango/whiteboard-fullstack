@@ -19,10 +19,12 @@ canvasRouter.patch("/", authMiddleware, updateCanvas);
 canvasRouter.post("/", authMiddleware, createCanvas);
 canvasRouter.delete("/", authMiddleware, deleteCanvas);
 
-canvasRouter.get("/:canvasId", authMiddleware, loadCanvas);
+
 
 canvasRouter.get("/share", authMiddleware, shareCanvas);
 canvasRouter.patch("/unshare", authMiddleware, unshareCanvas);
+
+canvasRouter.get("/:canvasId", authMiddleware, loadCanvas);
 
 
 

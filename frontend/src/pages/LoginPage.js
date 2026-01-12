@@ -29,11 +29,11 @@ function Login() {
       });
 
       const data = await response.json();
-
       if (!response.ok) {
         setError(data.message || "Invalid Credentials");
         return;
       }
+      
 
       localStorage.setItem("token", data.token);
       console.log(data.token);

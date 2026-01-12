@@ -1,0 +1,32 @@
+.container {
+  @apply absolute top-5 right-5 
+         flex flex-row
+         rounded-md
+         overflow-hidden
+         backdrop-blur-xl
+         bg-black/5
+         border border-black/10
+         shadow-lg;
+}
+
+
+
+.container button {
+  @apply px-5 py-3 
+         text-sm font-dyna
+         
+        text-gray-900
+        /* bg-transparent */
+        bg-white/0
+        border-r border-white/30
+        transition-all duration-150
+        hover:bg-blue-50 
+        active:bg-blue-200;
+}
+
+
+
+/* Remove divider from last button */
+.container button:last-child {
+  border-right: none;
+}

@@ -20,12 +20,21 @@ function App() {
             </ProtectedRoute>
           }
         />
-        <Route
+        {/* <Route
           path="/canvas/:id"
           element={
             <ProtectedRoute>
               <Canvas />
             </ProtectedRoute>
+          }
+        />
+      </Routes> */}
+        <Route
+          path="/canvas"
+          element={
+            
+              <Canvas />
+            
           }
         />
       </Routes>

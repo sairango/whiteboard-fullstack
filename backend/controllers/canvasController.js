@@ -26,6 +26,9 @@ export const updateCanvas = async (req, res) => {
     const { canvasId, elements } = req.body;
     const userId = req.userId;
 
+    console.log(canvasId);
+    console.log("hellooo")
+
     const canvas = await Canvas.findById(canvasId);
     if (!canvas) {
       return res.status(404).json({ message: "Canvas not found" });

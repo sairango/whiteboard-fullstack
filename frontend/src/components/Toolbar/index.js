@@ -23,7 +23,7 @@ function Toolbar() {
 
   const handleDownloadClick = () => {
     const canvas = document.getElementById("canvas");
-    //const context = canvas.getContext("2d");
+    
 
     const data = canvas.toDataURL("image/png");
     const anchor = document.createElement("a");
