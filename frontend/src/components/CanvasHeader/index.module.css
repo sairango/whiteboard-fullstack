@@ -2,7 +2,6 @@
   @apply absolute top-5 right-5 
          flex flex-row
          rounded-md
-         overflow-hidden
          backdrop-blur-xl
          bg-black/5
          border border-black/10
@@ -16,7 +15,7 @@
          text-sm font-dyna
          
         text-gray-900
-        /* bg-transparent */
+        
         bg-white/0
         border-r border-white/30
         transition-all duration-150
@@ -26,7 +25,67 @@
 
 
 
-/* Remove divider from last button */
+
 .container button:last-child {
   border-right: none;
 }
+
+.sharewindow {
+  @apply absolute top-full right-0 mt-2
+         w-64
+         rounded-lg
+         backdrop-blur-xl
+         bg-white/70
+         border border-black/10
+         shadow-xl
+         p-3
+         flex flex-col gap-2
+         z-50;
+}
+
+
+.sharewindow::before {
+  content: "";
+  position: absolute;
+  top: -6px;
+  right: 16px;
+  width: 12px;
+  height: 12px;
+  background: rgba(255, 255, 255, 0.7);
+  transform: rotate(45deg);
+  border-left: 1px solid rgba(0, 0, 0, 0.1);
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(10px);
+}
+
+
+.sharewindow label {
+  @apply text-xs font-dyna text-gray-700;
+}
+
+/* Input */
+.sharewindow input {
+  @apply w-full px-3 py-2
+         rounded-md
+         border border-black/10
+         bg-white/60
+         backdrop-blur-md
+         text-sm font-dyna text-gray-900
+         outline-none
+         focus:ring-2 focus:ring-blue-300
+         focus:border-blue-300;
+}
+
+/* Button */
+.sharewindow button {
+  @apply mt-1
+         px-3 py-2
+         rounded-md
+         text-sm font-dyna
+         bg-blue-500
+         text-white
+         hover:bg-blue-600
+         active:bg-blue-700
+         transition;
+}
+

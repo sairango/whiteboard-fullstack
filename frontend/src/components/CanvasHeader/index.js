@@ -6,7 +6,9 @@ import { useContext, useState } from "react";
 function CanvasHeader() {
   const [message, setMessage] = useState("");
   const [emailToShare, setEmailToShare] = useState("");
+  const [emailToUnshare, setEmailToUnshare] = useState("");
   const [showShareModal, setShowShareModal] = useState(false);
+  const [showUnshareModal, setShowUnshareModal] = useState(false);
   const { elements } = useContext(boardContext);
   const { id } = useParams();
 
@@ -22,39 +24,79 @@ function CanvasHeader() {
       body: JSON.stringify({ canvasId: id, elements: elements }),
     });
 
+    const data = await response.json();
+
     if (!response.ok) {
-      setMessage(response.message || "Failed saving canvas");
+      setMessage("Failed saving canvas");
       return;
     }
-    if (response.ok) {
-      setMessage(response.message || "Canvas saved");
-    }
+
+    setMessage(data.message || "canvas saved");
   };
 
   const shareHandler = async () => {
     const token = localStorage.getItem("token");
 
     const response = await fetch("http://localhost:8000/canvas/share", {
-      method: "GET",
+      method: "POST",
       headers: {
         Authorization: `Bearer ${token}`,
         "Content-type": "application/json",
       },
-      body: JSON.stringify({ canvasId: id, email: emailToShare }),
+      body: JSON.stringify({ canvasId: id, emailToShare: emailToShare }),
     });
-      
-      if (!response.ok) {
-          
-      }
+
+    const data = await response.json();
+
+    if (!response.ok) {
+      setMessage(data.message || "canvas not shared");
+      return;
+    }
+
+    setMessage(data.message);
+
+    
   };
 
   const unshareHandler = async () => {};
   return (
-    <div className={classes.container}>
-      <button onClick={saveHandler}>Save</button>
-      <button onClick={() =>setShowShareModal(false)}>Share</button>
-      <button onClick={unshareHandler}>Unshare</button>
-    </div>
+    <>
+      <div className={classes.container}>
+        <button onClick={saveHandler}>Save</button>
+
+        <div className="relative">
+          <button onClick={() => setShowShareModal((v) => !v)}>Share</button>
+
+          {showShareModal && (
+            <div className={classes.sharewindow}>
+              <label>Share with</label>
+              <input
+                type="email"
+                onChange={(e) => setEmailToShare(e.target.value)}></input>
+              <button onClick={shareHandler}>Share</button>
+            </div>
+          )}
+        </div>
+
+        <div className="relative">
+          <button onClick={() => setShowUnshareModal((v) => !v)}>
+            Unshare
+          </button>
+
+          {showUnshareModal && (
+            <div className={classes.sharewindow}>
+              <label>Unshare with</label>
+              <input
+                type="email"
+                onChange={(e) => setEmailToUnshare(e.target.value)}></input>
+              <button onClick={unshareHandler}>Share</button>
+            </div>
+          )}
+        </div>
+      </div>
+
+      {message && <div className={classes.message}>{message}</div>}
+    </>
   );
 }
 
