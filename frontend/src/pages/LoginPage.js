@@ -1,7 +1,7 @@
 import classes from "./LoginPage.module.css";
 // import bgimg from "./../assets/bg.png";
 import { useNavigate } from "react-router-dom";
-import { useContext, useState } from "react";
+import { useContext, useState , useEffect } from "react";
 import authContext from "../auth/auth-context";
 
 function Login() {
@@ -11,6 +11,15 @@ function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+
+  useEffect(() => {
+      if (!error) return;
+  
+      const timer = setTimeout(() => { setError("") }, 3000);
+  
+      return ()=>clearTimeout(timer)
+      
+    }, [error]);
 
   const handleLogin = async (event) => {
     event.preventDefault();
@@ -36,6 +45,7 @@ function Login() {
       
 
       localStorage.setItem("token", data.token);
+      localStorage.setItem("WBusername", data.username);
       console.log(data.token);
       login();
       navigate("/dashboard");

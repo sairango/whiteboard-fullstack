@@ -22,7 +22,7 @@ export const registerUser = async (req, res) => {
 
     if (userExists) {
       return res.status(400).json({
-        details:
+        message:
           userExists.email === email
             ? "email already registered"
             : "username already registered",
@@ -42,7 +42,7 @@ export const registerUser = async (req, res) => {
 export const loginUser = async (req, res) => {
   try {
     const { email, password } = req.body;
-    console.log("req received")
+    console.log("req received");
 
     if (!email || !password) {
       return res.status(400).json({ message: "All fields are required" });
@@ -64,7 +64,8 @@ export const loginUser = async (req, res) => {
 
     return res.status(200).json({
       message: "Login Successful",
-      token:token,
+      token: token,
+      username: user.username,
     });
   } catch (error) {
     res.status(500).json({
@@ -79,7 +80,7 @@ export const getUser = async (req, res) => {
     const user = await User.findById(req.userId).select("-password");
     if (!user) return res.status(404).json({ error: "User not found" });
 
-    res.json(user); 
+    res.json(user);
   } catch (error) {
     res
       .status(500)

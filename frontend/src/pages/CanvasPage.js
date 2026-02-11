@@ -12,34 +12,41 @@ function CanvasContent() {
   const { id } = useParams();
   const { loadCanvas } = useContext(boardContext);
 
-  // useEffect(() => {
-  //   const fetchCanvas = async () => {
-  //     const token = localStorage.getItem("token");
+  useEffect(() => {
+    if (!id) return; 
 
-  //     const response = await fetch(`http://localhost:8000/canvas/${id}`, {
-  //       headers: {
-  //         Authorization: `Bearer ${token}`,
-  //       },
-  //     });
+    const fetchCanvas = async () => {
+      try {
+        const token = localStorage.getItem("token");
 
-  //     if (!response.ok) return;
-  //     const canvas = await response.json();
-  //     loadCanvas(canvas.elements);
-  //   };
+        const response = await fetch(`http://localhost:8000/canvas/${id}`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
 
-  //   fetchCanvas();
-  // }, [id, loadCanvas]);
-  
+        if (!response.ok) return;
+
+        const canvas = await response.json();
+        loadCanvas(canvas.elements);
+      } catch (error) {
+        console.log("Failed loading canvas");
+      }
+    };
+
+    fetchCanvas();
+  }, [id, loadCanvas]);
 
   return (
     <>
       <Board />
       <Toolbar />
-      <CanvasHeader/>
+      <CanvasHeader />
       <Toolbox />
     </>
   );
 }
+
 
 function Canvas() {
   return (

@@ -5,29 +5,36 @@ import User from "../models/userModel.js";
 export const createCanvas = async (req, res) => {
   try {
     const userId = req.userId;
+    const { title } = req.body;
 
     const newCanvas = new Canvas({
+      title: title?.trim() || "Untitled Canvas",
       owner: userId,
       shared: [],
       elements: [],
     });
+
     await newCanvas.save();
 
-    return res
-      .status(200)
-      .json({ message: "Canvas Created", canvasId: newCanvas._id });
+    return res.status(200).json({
+      message: "Canvas Created",
+      canvasId: newCanvas._id,
+    });
   } catch (error) {
-    res.status(500).json({ message: "Error Occured while creatin canvas" });
+    res.status(500).json({
+      message: "Error Occurred while creating canvas",
+    });
   }
 };
+ 
 
 export const updateCanvas = async (req, res) => {
   try {
     const { canvasId, elements } = req.body;
     const userId = req.userId;
-
-    console.log(canvasId);
-    console.log("hellooo")
+    // console.log(elements);
+    // console.log(canvasId);
+    // console.log("hellooo");
 
     const canvas = await Canvas.findById(canvasId);
     if (!canvas) {
@@ -93,7 +100,7 @@ export const shareCanvas = async (req, res) => {
     }
 
     const alreadyShared = canvas.shared.some((id) =>
-      id.equals(userToShare._id)
+      id.equals(userToShare._id),
     );
 
     if (alreadyShared) {
@@ -131,7 +138,7 @@ export const unshareCanvas = async (req, res) => {
       return res.status(404).json({ message: "user not found" });
     }
     const newshared = canvas.shared.filter(
-      (id) => !id.equals(userToUnshare._id)
+      (id) => !id.equals(userToUnshare._id),
     );
     canvas.shared = newshared;
     await canvas.save();

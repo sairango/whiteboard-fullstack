@@ -1,18 +1,38 @@
 import classes from "./index.module.css";
 import { useParams } from "react-router";
+import { useNavigate } from "react-router-dom";
 import boardContext from "../../store/board-context";
-import { useContext, useState } from "react";
+import authContext from "../../auth/auth-context";
+import { useContext, useState,useEffect } from "react";
 
 function CanvasHeader() {
   const [message, setMessage] = useState("");
   const [emailToShare, setEmailToShare] = useState("");
-  const [emailToUnshare, setEmailToUnshare] = useState("");
   const [showShareModal, setShowShareModal] = useState(false);
-  const [showUnshareModal, setShowUnshareModal] = useState(false);
+
   const { elements } = useContext(boardContext);
+  const { isAuthenticated, logout } = useContext(authContext);
+
+  const navigate = useNavigate();
   const { id } = useParams();
 
+
+  useEffect(() => {
+    if (!message) return;
+
+    const timer = setTimeout(() => {
+      setMessage("");
+    }, 2000);
+
+    return () => clearTimeout(timer);
+  }, [message]);
+
   const saveHandler = async () => {
+    if (!isAuthenticated) {
+      navigate("/login");
+      return;
+    }
+
     const token = localStorage.getItem("token");
 
     const response = await fetch("http://localhost:8000/canvas", {
@@ -21,7 +41,7 @@ function CanvasHeader() {
         Authorization: `Bearer ${token}`,
         "Content-type": "application/json",
       },
-      body: JSON.stringify({ canvasId: id, elements: elements }),
+      body: JSON.stringify({ canvasId: id, elements }),
     });
 
     const data = await response.json();
@@ -31,10 +51,15 @@ function CanvasHeader() {
       return;
     }
 
-    setMessage(data.message || "canvas saved");
+    setMessage(data.message || "Canvas saved");
   };
 
   const shareHandler = async () => {
+    if (!isAuthenticated) {
+      navigate("/login");
+      return;
+    }
+
     const token = localStorage.getItem("token");
 
     const response = await fetch("http://localhost:8000/canvas/share", {
@@ -43,55 +68,59 @@ function CanvasHeader() {
         Authorization: `Bearer ${token}`,
         "Content-type": "application/json",
       },
-      body: JSON.stringify({ canvasId: id, emailToShare: emailToShare }),
+      body: JSON.stringify({ canvasId: id, emailToShare }),
     });
 
     const data = await response.json();
 
     if (!response.ok) {
-      setMessage(data.message || "canvas not shared");
+      setMessage(data.message || "Canvas not shared");
       return;
     }
 
     setMessage(data.message);
-
-    
+    setShowShareModal(false);
   };
 
-  const unshareHandler = async () => {};
   return (
     <>
-      <div className={classes.container}>
-        <button onClick={saveHandler}>Save</button>
+      <div className={classes.wrapper}>
+        <div className={classes.container}>
+          {/* LEFT ACTIONS */}
+          <div className={classes.actions}>
+            <button onClick={saveHandler}>Save</button>
 
-        <div className="relative">
-          <button onClick={() => setShowShareModal((v) => !v)}>Share</button>
+            <div className={classes.relatives}>
+              <button onClick={() => setShowShareModal((v) => !v)}>
+                Share
+              </button>
 
-          {showShareModal && (
-            <div className={classes.sharewindow}>
-              <label>Share with</label>
-              <input
-                type="email"
-                onChange={(e) => setEmailToShare(e.target.value)}></input>
-              <button onClick={shareHandler}>Share</button>
+              {showShareModal && (
+                <div className={classes.sharewindow}>
+                  <label>Share with</label>
+                  <input
+                    type="email"
+                    onChange={(e) => setEmailToShare(e.target.value)}
+                  />
+                  <button onClick={shareHandler}>Share</button>
+                </div>
+              )}
             </div>
-          )}
-        </div>
+          </div>
 
-        <div className="relative">
-          <button onClick={() => setShowUnshareModal((v) => !v)}>
-            Unshare
-          </button>
-
-          {showUnshareModal && (
-            <div className={classes.sharewindow}>
-              <label>Unshare with</label>
-              <input
-                type="email"
-                onChange={(e) => setEmailToUnshare(e.target.value)}></input>
-              <button onClick={unshareHandler}>Share</button>
-            </div>
-          )}
+          {/* RIGHT AUTH */}
+          <div className={classes.auth}>
+            {!isAuthenticated ? (
+              <button onClick={() => navigate("/login")}>Login</button>
+            ) : (
+              <>
+                <button onClick={() => navigate("/dashboard")}>
+                  Dashboard
+                </button>
+                <button onClick={logout}>Logout</button>
+              </>
+            )}
+          </div>
         </div>
       </div>
 

@@ -1,11 +1,17 @@
 import { useEffect, useState } from "react";
 import classes from "./DashboardPage.module.css";
-// import bgimg from "../assets/bg.png";
 import { useNavigate } from "react-router";
+import authContext from "../auth/auth-context";
+import { useContext } from "react";
 
 function Dashboard() {
   const [canvases, setCanvases] = useState([]);
   const [error, setError] = useState("");
+  const [newTitle, setNewTitle] = useState("");
+  const [showCreateInput, setShowCreateInput] = useState(false);
+  const { logout } = useContext(authContext);
+  const username = localStorage.getItem("WBusername");
+
 
   const fetchCanvases = async () => {
     try {
@@ -48,6 +54,7 @@ function Dashboard() {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         },
+        body: JSON.stringify({ title: newTitle }),
       });
 
       if (!response.ok) {
@@ -65,6 +72,14 @@ function Dashboard() {
 
   return (
     <div className={classes.container}>
+      <div className={classes.topbar}>
+        <h2 className={classes.greeting}>Hello {username}</h2>
+
+        <button className={classes.logoutBtn} onClick={logout}>
+          Logout
+        </button>
+      </div>
+
       <h1 className={classes.heading}>My Canvases</h1>
 
       {error && <p className={classes.error}>{error}</p>}
@@ -83,9 +98,27 @@ function Dashboard() {
 
         <div className={classes.card}>
           <h2 className={classes.cardTitle}>Create a New Canvas</h2>
-          <button className={classes.button} onClick={handleCreateCanvas}>
-            Create
-          </button>
+
+          {!showCreateInput ? (
+            <button
+              className={classes.button}
+              onClick={() => setShowCreateInput(true)}>
+              Create
+            </button>
+          ) : (
+            <>
+              <input
+                type="text"
+                placeholder="Enter canvas title"
+                value={newTitle}
+                onChange={(e) => setNewTitle(e.target.value)}
+                className={classes.input}
+              />
+              <button className={classes.button} onClick={handleCreateCanvas}>
+                Create Canvas
+              </button>
+            </>
+          )}
         </div>
       </div>
     </div>

@@ -10,6 +10,7 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
+        <Route path="/" element={<Canvas />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route
@@ -20,7 +21,7 @@ function App() {
             </ProtectedRoute>
           }
         />
-        {/* <Route
+        <Route
           path="/canvas/:id"
           element={
             <ProtectedRoute>
@@ -28,16 +29,8 @@ function App() {
             </ProtectedRoute>
           }
         />
-      </Routes> */}
-        <Route
-          path="/canvas"
-          element={
-            
-              <Canvas />
-            
-          }
-        />
       </Routes>
+      {/* </Routes> */}
     </BrowserRouter>
   );
 }

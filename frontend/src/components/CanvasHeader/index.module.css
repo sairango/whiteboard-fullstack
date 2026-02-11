@@ -1,48 +1,55 @@
+.wrapper {
+  @apply absolute top-5 right-5;
+}
+
 .container {
-  @apply absolute top-5 right-5 
-         flex flex-row
+  @apply flex items-center gap-4
          rounded-md
          backdrop-blur-xl
          bg-black/5
          border border-black/10
-         shadow-lg;
+         shadow-lg
+         px-2;
 }
 
+/* LEFT + RIGHT groups */
+.actions {
+  @apply flex items-center;
+}
 
+.auth {
+  @apply flex items-center border-l border-white/20 pl-2;
+}
 
+.relatives {
+  @apply relative;
+}
+
+/* BUTTON BASE STYLE */
 .container button {
-  @apply px-5 py-3 
+  @apply px-4 py-2
          text-sm font-dyna
-         
-        text-gray-900
-        
-        bg-white/0
-        border-r border-white/30
-        transition-all duration-150
-        hover:bg-blue-50 
-        active:bg-blue-200;
+         text-gray-900
+         bg-white/0
+         transition-all duration-150
+         hover:bg-blue-50
+         active:bg-blue-200
+         rounded-md;
 }
 
-
-
-
-.container button:last-child {
-  border-right: none;
-}
-
+/* Share Window */
 .sharewindow {
   @apply absolute top-full right-0 mt-2
          w-64
          rounded-lg
          backdrop-blur-xl
-         bg-white/70
+         bg-white/80
          border border-black/10
          shadow-xl
          p-3
          flex flex-col gap-2
          z-50;
 }
-
 
 .sharewindow::before {
   content: "";
@@ -51,32 +58,27 @@
   right: 16px;
   width: 12px;
   height: 12px;
-  background: rgba(255, 255, 255, 0.7);
+  background: rgba(255, 255, 255, 0.8);
   transform: rotate(45deg);
   border-left: 1px solid rgba(0, 0, 0, 0.1);
   border-top: 1px solid rgba(0, 0, 0, 0.1);
-  backdrop-filter: blur(10px);
 }
-
 
 .sharewindow label {
   @apply text-xs font-dyna text-gray-700;
 }
 
-/* Input */
 .sharewindow input {
   @apply w-full px-3 py-2
          rounded-md
          border border-black/10
          bg-white/60
-         backdrop-blur-md
          text-sm font-dyna text-gray-900
          outline-none
          focus:ring-2 focus:ring-blue-300
          focus:border-blue-300;
 }
 
-/* Button */
 .sharewindow button {
   @apply mt-1
          px-3 py-2
@@ -89,3 +91,11 @@
          transition;
 }
 
+/* Message */
+.message {
+  @apply absolute top-20 right-5
+         bg-black/70 text-white
+         px-4 py-2
+         rounded-md
+         text-sm;
+}

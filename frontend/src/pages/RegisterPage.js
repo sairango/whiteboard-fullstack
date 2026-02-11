@@ -1,6 +1,6 @@
 import classes from "./RegisterPage.module.css";
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useState , useEffect } from "react";
 
 function Register() {
   const navigate = useNavigate();
@@ -9,6 +9,16 @@ function Register() {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [error, setError] = useState("");
+
+
+  useEffect(() => {
+    if (!error) return;
+
+    const timer = setTimeout(() => { setError("") }, 3000);
+
+    return ()=>clearTimeout(timer)
+    
+  }, [error]);
 
   const handleRegister = async (e) => {
     e.preventDefault();
@@ -39,6 +49,7 @@ function Register() {
       console.log(data);
 
       if (!response.ok) {
+        console.log(data.message)
         setError(data.message || "Registration Failed");
         return;
       }
