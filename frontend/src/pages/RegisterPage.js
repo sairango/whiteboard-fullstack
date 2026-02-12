@@ -2,6 +2,12 @@ import classes from "./RegisterPage.module.css";
 import { useNavigate } from "react-router-dom";
 import { useState , useEffect } from "react";
 
+
+
+
+
+
+
 function Register() {
   const navigate = useNavigate();
   const [username, setUsername] = useState("");
@@ -35,15 +41,18 @@ function Register() {
     }
 
     try {
-      const response = await fetch("http://localhost:8000/user/register", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          username: username,
-          email: email,
-          password: password,
-        }),
-      });
+      const response = await fetch(
+        `${process.env.REACT_APP_API_URL}/user/register`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            username: username,
+            email: email,
+            password: password,
+          }),
+        },
+      );
 
       const data = await response.json();
       console.log(data);

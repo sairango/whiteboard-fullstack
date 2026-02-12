@@ -32,10 +32,11 @@ function CanvasHeader() {
       navigate("/login");
       return;
     }
+    console.log("sv req")
 
     const token = localStorage.getItem("token");
 
-    const response = await fetch("http://localhost:8000/canvas", {
+    const response = await fetch(`${process.env.REACT_APP_API_URL}/canvas`, {
       method: "PATCH",
       headers: {
         Authorization: `Bearer ${token}`,
@@ -62,14 +63,17 @@ function CanvasHeader() {
 
     const token = localStorage.getItem("token");
 
-    const response = await fetch("http://localhost:8000/canvas/share", {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${token}`,
-        "Content-type": "application/json",
+    const response = await fetch(
+      `${process.env.REACT_APP_API_URL}/canvas/share`,
+      {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-type": "application/json",
+        },
+        body: JSON.stringify({ canvasId: id, emailToShare }),
       },
-      body: JSON.stringify({ canvasId: id, emailToShare }),
-    });
+    );
 
     const data = await response.json();
 

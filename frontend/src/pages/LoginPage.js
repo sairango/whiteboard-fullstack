@@ -4,6 +4,8 @@ import { useNavigate } from "react-router-dom";
 import { useContext, useState , useEffect } from "react";
 import authContext from "../auth/auth-context";
 
+
+
 function Login() {
   const navigate = useNavigate();
   const { login } = useContext(authContext);
@@ -31,11 +33,14 @@ function Login() {
     }
 
     try {
-      const response = await fetch("http://localhost:8000/user/login", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email: email, password: password }),
-      });
+      const response = await fetch(
+        `${process.env.REACT_APP_API_URL}/user/login`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ email: email, password: password }),
+        },
+      );
 
       const data = await response.json();
       if (!response.ok) {

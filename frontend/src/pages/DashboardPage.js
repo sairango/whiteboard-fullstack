@@ -4,6 +4,9 @@ import { useNavigate } from "react-router";
 import authContext from "../auth/auth-context";
 import { useContext } from "react";
 
+
+
+
 function Dashboard() {
   const [canvases, setCanvases] = useState([]);
   const [error, setError] = useState("");
@@ -16,7 +19,7 @@ function Dashboard() {
   const fetchCanvases = async () => {
     try {
       const token = localStorage.getItem("token");
-      const response = await fetch("http://localhost:8000/canvas", {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/canvas`, {
         method: "GET",
         headers: {
           Authorization: `Bearer ${token}`,
@@ -48,7 +51,7 @@ function Dashboard() {
   const handleCreateCanvas = async () => {
     try {
       const token = localStorage.getItem("token");
-      const response = await fetch("http://localhost:8000/canvas", {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/canvas`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

@@ -8,6 +8,8 @@ import CanvasHeader from "../components/CanvasHeader";
 import { useEffect, useContext } from "react";
 import boardContext from "../store/board-context";
 
+
+
 function CanvasContent() {
   const { id } = useParams();
   const { loadCanvas } = useContext(boardContext);
@@ -19,11 +21,14 @@ function CanvasContent() {
       try {
         const token = localStorage.getItem("token");
 
-        const response = await fetch(`http://localhost:8000/canvas/${id}`, {
-          headers: {
-            Authorization: `Bearer ${token}`,
+        const response = await fetch(
+          `${process.env.REACT_APP_API_URL}/canvas/${id}`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
           },
-        });
+        );
 
         if (!response.ok) return;
 

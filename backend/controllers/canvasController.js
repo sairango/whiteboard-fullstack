@@ -6,7 +6,7 @@ export const createCanvas = async (req, res) => {
   try {
     const userId = req.userId;
     const { title } = req.body;
-
+    console.log("req for creating canvas")
     const newCanvas = new Canvas({
       title: title?.trim() || "Untitled Canvas",
       owner: userId,
@@ -33,7 +33,7 @@ export const updateCanvas = async (req, res) => {
     const { canvasId, elements } = req.body;
     const userId = req.userId;
     // console.log(elements);
-    // console.log(canvasId);
+    console.log(canvasId);
     // console.log("hellooo");
 
     const canvas = await Canvas.findById(canvasId);
